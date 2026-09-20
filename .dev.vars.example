@@ -1,0 +1,32 @@
+# Copy to .dev.vars for LOCAL DEVELOPMENT ONLY. Never commit .dev.vars.
+APP_ENV=development
+SITE_URL=http://localhost:8787
+REGISTRATION_ENABLED=false
+BILLING_ENABLED=false
+# Public operator information must be accurate before opening registrations.
+COMPANY_NAME="Radoslav Dodnikov (Kova Studio)"
+COMPANY_ID=
+COMPANY_ADDRESS=
+COMPANY_CITY=Sofia
+CONTACT_EMAIL=
+CONTACT_PHONE=
+ADMIN_EMAILS=
+EMAIL_FROM=
+TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_STARTER=
+STRIPE_PRICE_CREATOR=
+STRIPE_PRICE_STUDIO=
+
+# fal.ai API scope key for avatar videos. Never commit real credentials.
+FAL_KEY=
+
+
+# Media / premium voice integrations (independent credentials and configuration).
+MEDIA_ENABLED=false
+ELEVENLABS_API_KEY=
+ELEVENLABS_VOICES=
+STUDIO_SCRIPT_MODEL=openai/gpt-5.6-luna
+WAVESPEED_API_KEY=

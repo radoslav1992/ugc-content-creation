@@ -1,0 +1,46 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ugc-content-creation",
+  "main": "server/index.ts",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "keep_vars": true,
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": true,
+  },
+  "ai": { "binding": "AI" },
+  "send_email": [
+    { "name": "EMAIL" },
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ugc-content-creation",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "r2_buckets": [{ "binding": "AUDIO", "bucket_name": "ugc-content-creation-audio" }],
+  "containers": [{ "class_name": "MediaRenderer", "image": "./renderer/Dockerfile", "max_instances": 3, "instance_type": "standard-2" }],
+  "durable_objects": { "bindings": [{ "name": "MEDIA_RENDERER", "class_name": "MediaRenderer" }] },
+  "migrations": [{ "tag": "media-v1", "new_sqlite_classes": ["MediaRenderer"] }],
+  "workflows": [
+    { "name": "ugc-content-creation-media", "binding": "MEDIA_GENERATION", "class_name": "MediaGeneration" },
+    {
+      "name": "ugc-content-creation-video",
+      "binding": "VIDEO_GENERATION",
+      "class_name": "VideoGeneration",
+    },
+    {
+      "name": "ugc-content-creation-generation",
+      "binding": "GENERATION",
+      "class_name": "AudioGeneration",
+    },
+  ],
+  "triggers": { "crons": ["17 * * * *"] },
+  "observability": { "enabled": true },
+  "limits": { "cpu_ms": 120000 },
+}
