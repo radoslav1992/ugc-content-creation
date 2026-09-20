@@ -1,17 +1,17 @@
 # Deploy Scene to Cloudflare
 
-This is an independent app. Do not point it at Rech BG's live D1 database or R2 bucket. The repository includes code and configuration templates, not production credentials or provisioned resources.
+This is an independent app. Do not point it at Rech BG's live D1 database or R2 bucket. The repository is configured with the D1 ID and R2 bucket supplied by the owner; production credentials and remaining runtime settings must be configured separately.
 
-## 1. Create the app's storage
+## 1. Initialize the configured storage
 
-Use the Cloudflare dashboard or an authenticated Wrangler session:
+The following resources are already configured in `wrangler.jsonc`:
 
-```sh
-npx wrangler d1 create ugc-content-creation
-npx wrangler r2 bucket create ugc-content-creation-audio
-```
+| Binding | Resource |
+| --- | --- |
+| `DB` | D1 ID `9de0693e-231e-4ef4-bd11-8dc506606f1e` (configured name: `ugc-content-creation`) |
+| `AUDIO` | R2 bucket `ugc-content-creation-audio` |
 
-Replace the all-zero `database_id` in `wrangler.jsonc` with the newly returned D1 ID. If you choose different names, update the Wrangler resources and the `db:local` / `db:remote` package scripts together.
+Use these existing resources; do not recreate them. Their identifiers were supplied by the owner. Database migrations still need to be applied if they have not already been run.
 
 Apply all migrations, in order:
 

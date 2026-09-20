@@ -43,7 +43,7 @@ If Docker is unavailable, `npx wrangler deploy --dry-run --no-autoconfig --conta
 
 ## Launch
 
-Follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). This repository deliberately has **its own database, bucket and workflow names**, a placeholder D1 ID, no assigned domain, and no copied secrets or Stripe Price IDs. Configure those before deploying. `rech-bg` is unchanged.
+Follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). This repository deliberately has **its own database, bucket and workflow names**, the supplied D1 ID and R2 bucket, no assigned domain, and no copied secrets or Stripe Price IDs. Apply the database migrations and configure the remaining runtime settings before deploying. `rech-bg` is unchanged.
 
 ## Replace the avatar showcase
 

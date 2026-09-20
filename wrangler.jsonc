@@ -19,7 +19,7 @@
     {
       "binding": "DB",
       "database_name": "ugc-content-creation",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "9de0693e-231e-4ef4-bd11-8dc506606f1e",
       "migrations_dir": "migrations",
     },
   ],
