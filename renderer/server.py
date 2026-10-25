@@ -1,5 +1,5 @@
 """Private, bounded FFmpeg service. Only the Worker binding can reach this port."""
-import json, math, os, re, shutil, subprocess, tempfile, threading, time, urllib.request
+import json, math, os, re, shutil, signal, subprocess, tempfile, threading, time, urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
 
@@ -100,4 +100,12 @@ class Handler(BaseHTTPRequestHandler):
             if job and job['status']!='running':shutil.rmtree(job['dir'],ignore_errors=True);del JOBS[id]
         return self.respond(200,{})
 
-if __name__=='__main__': ThreadingHTTPServer(('0.0.0.0',8080),Handler).serve_forever()
+def stop(signum, frame):
+    """The platform stops an idle container with SIGTERM (the Worker's sleepAfter). As the container's first process
+    (PID 1) the server would ignore it, as Linux gives PID 1 no default action, and the container would keep running,
+    and be billed, until the next deploy. A job still running is dropped with it: nobody has asked for it for a minute."""
+    os._exit(0)
+
+if __name__=='__main__':
+    signal.signal(signal.SIGTERM, stop)
+    ThreadingHTTPServer(('0.0.0.0',int(os.environ.get('PORT') or 8080)),Handler).serve_forever()
